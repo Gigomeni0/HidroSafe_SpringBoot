@@ -1,3 +1,4 @@
+// src/main/java/com/hidro_safe/restapi/service/impl/MonitoramentoServiceImpl.java
 package com.hidro_safe.restapi.service.impl;
 
 import com.hidro_safe.restapi.dto.DadosMonitoramentoDTO;
@@ -6,6 +7,7 @@ import com.hidro_safe.restapi.repository.MonitoramentoRepository;
 import com.hidro_safe.restapi.service.MonitoramentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -17,12 +19,22 @@ public class MonitoramentoServiceImpl implements MonitoramentoService {
 
     @Override
     public DadosMonitoramentoDTO obterDadosAtuais() {
-        // Buscar o dado mais recente
         Optional<DadosMonitoramento> dadosOpt = repository.findTopByOrderByTimestampDesc();
-
-        // Se existir dados, converte para DTO, senão retorna um DTO com valores padrão
         return dadosOpt.map(this::converterParaDTO)
                 .orElse(criarDadosPadrao());
+    }
+
+    @Override
+    public DadosMonitoramentoDTO salvarDadosMonitoramento(DadosMonitoramentoDTO dto) {
+        DadosMonitoramento entity = new DadosMonitoramento();
+        entity.setNivelAgua(dto.getNivelAgua());
+        entity.setVazao(dto.getVazao());
+        entity.setPressao(dto.getPressao());
+        entity.setTimestamp(dto.getTimestamp() != null
+                ? dto.getTimestamp()
+                : LocalDateTime.now());
+        DadosMonitoramento salvo = repository.save(entity);
+        return converterParaDTO(salvo);
     }
 
     private DadosMonitoramentoDTO converterParaDTO(DadosMonitoramento dados) {
