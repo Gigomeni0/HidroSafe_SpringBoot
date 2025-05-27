@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.Instant;
+import java.util.UUID;
 
 @Service
 public class AlertaServiceImpl implements AlertaService {
@@ -23,7 +25,23 @@ public class AlertaServiceImpl implements AlertaService {
                 .map(this::converterParaDTO)
                 .collect(Collectors.toList());
     }
+    @Override
+    public AlertaDTO salvarAlerta(AlertaDTO alertaDTO) {
+        // Criar uma nova entidade, deixando o ID ser gerado pelo Hibernate
+        Alerta alerta = new Alerta();
+        alerta.setTipo(alertaDTO.getTipo());
+        alerta.setTitulo(alertaDTO.getTitulo());
+        alerta.setDescricao(alertaDTO.getDescricao());
+        alerta.setResolvido(alertaDTO.isResolvido());
 
+        // Usar timestamp fornecido ou gerar um novo
+        alerta.setTimestamp(alertaDTO.getTimestamp() != null ?
+                alertaDTO.getTimestamp() : Instant.now());
+
+        // Salvar a nova entidade
+        alerta = repository.save(alerta);
+        return converterParaDTO(alerta);
+    }
     private AlertaDTO converterParaDTO(Alerta alerta) {
         AlertaDTO dto = new AlertaDTO();
         dto.setId(alerta.getId());

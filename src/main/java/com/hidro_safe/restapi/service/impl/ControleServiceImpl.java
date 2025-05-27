@@ -1,41 +1,51 @@
 package com.hidro_safe.restapi.service.impl;
 
-import com.hidro_safe.restapi.service.ControleService;
 import com.hidro_safe.restapi.dto.ComandoControleDTO;
 import com.hidro_safe.restapi.dto.ControlesSistemaDTO;
+import com.hidro_safe.restapi.model.ConfiguracaoSistema;
+import com.hidro_safe.restapi.repository.ConfiguracaoSistemaRepository;
+import com.hidro_safe.restapi.service.ControleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ControleServiceImpl implements ControleService {
 
-    // Estado simulado do sistema
-    private boolean bombasDrenagem = false;
-    private boolean comportasAbertas = false;
-    private boolean alertasAtivos = true;
+    @Autowired
+    private ConfiguracaoSistemaRepository repository;
 
     @Override
     public ControlesSistemaDTO obterEstadoAtual() {
-        ControlesSistemaDTO estado = new ControlesSistemaDTO();
-        estado.setBombasDrenagem(bombasDrenagem);
-        estado.setComportasAbertas(comportasAbertas);
-        estado.setAlertasAtivos(alertasAtivos);
-        return estado;
+        ConfiguracaoSistema config = repository.findTopByOrderByIdDesc();
+        return converterParaDTO(config);
     }
 
     @Override
     public ControlesSistemaDTO executarComando(ComandoControleDTO comando) {
-        switch (comando.getTipo()) {
-            case "bombas":
-                bombasDrenagem = comando.isValor();
+        ConfiguracaoSistema config = repository.findTopByOrderByIdDesc();
+
+        // Aplicar comando com base no tipo
+        switch (comando.getTipo().toUpperCase()) {
+            case "BOMBAS":
+                config.setBombasDrenagem(comando.isValor());
                 break;
-            case "comportas":
-                comportasAbertas = comando.isValor();
+            case "COMPORTAS":
+                config.setComportasAbertas(comando.isValor());
                 break;
-            case "alertas":
-                alertasAtivos = comando.isValor();
+            case "ALERTAS":
+                config.setAlertasAtivos(comando.isValor());
                 break;
         }
 
-        return obterEstadoAtual();
+        repository.save(config);
+        return converterParaDTO(config);
+    }
+
+    private ControlesSistemaDTO converterParaDTO(ConfiguracaoSistema config) {
+        ControlesSistemaDTO dto = new ControlesSistemaDTO();
+        dto.setBombasDrenagem(config.isBombasDrenagem());
+        dto.setComportasAbertas(config.isComportasAbertas());
+        dto.setAlertasAtivos(config.isAlertasAtivos());
+        return dto;
     }
 }

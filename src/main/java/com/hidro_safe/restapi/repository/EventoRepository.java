@@ -1,4 +1,3 @@
-// src/main/java/com/hidro_safe/restapi/repository/EventoRepository.java
 package com.hidro_safe.restapi.repository;
 
 import com.hidro_safe.restapi.model.Evento;
@@ -9,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, UUID> {
-    List<Evento> findTop20ByOrderByTimestampDesc();
+    List<Evento> findAllByOrderByTimestampDesc();
 }

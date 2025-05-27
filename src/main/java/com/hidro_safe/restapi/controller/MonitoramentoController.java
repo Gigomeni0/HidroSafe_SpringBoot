@@ -1,4 +1,3 @@
-// src/main/java/com/hidro_safe/restapi/controller/MonitoramentoController.java
 package com.hidro_safe.restapi.controller;
 
 import com.hidro_safe.restapi.dto.DadosMonitoramentoDTO;
@@ -17,7 +16,7 @@ public class MonitoramentoController {
     private MonitoramentoService service;
 
     @GetMapping("/dados-atuais")
-    public ResponseEntity<DadosMonitoramentoDTO> getDadosAtuais() {
+    public ResponseEntity<DadosMonitoramentoDTO> obterDadosAtuais() {
         return ResponseEntity.ok(service.obterDadosAtuais());
     }
 }

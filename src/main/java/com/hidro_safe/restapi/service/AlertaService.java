@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AlertaService {
     List<AlertaDTO> obterAlertasAtivos();
+    AlertaDTO salvarAlerta(AlertaDTO alertaDTO);
 }

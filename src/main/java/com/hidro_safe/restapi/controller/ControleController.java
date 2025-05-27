@@ -1,4 +1,3 @@
-// src/main/java/com/hidro_safe/restapi/controller/ControlesSistemaController.java
 package com.hidro_safe.restapi.controller;
 
 import com.hidro_safe.restapi.dto.ComandoControleDTO;
@@ -10,19 +9,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/controles")
-public class ControlesSistemaController {
+public class ControleController {
 
     @Autowired
     private ControleService service;
 
     @GetMapping("/estado")
-    public ResponseEntity<ControlesSistemaDTO> getEstado() {
+    public ResponseEntity<ControlesSistemaDTO> obterEstadoAtual() {
         return ResponseEntity.ok(service.obterEstadoAtual());
     }
 
     @PostMapping("/comando")
-    public ResponseEntity<ControlesSistemaDTO> executarComando(
-            @RequestBody ComandoControleDTO comando) {
+    public ResponseEntity<ControlesSistemaDTO> executarComando(@RequestBody ComandoControleDTO comando) {
         return ResponseEntity.ok(service.executarComando(comando));
     }
 }

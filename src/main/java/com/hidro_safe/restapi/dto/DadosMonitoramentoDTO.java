@@ -1,45 +1,52 @@
-// src/main/java/com/hidro_safe/restapi/dto/DadosMonitoramentoDTO.java
 package com.hidro_safe.restapi.dto;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class DadosMonitoramentoDTO {
-    private double nivelRio;
-    private double precipitacao;
-    private double temperatura;
-    private String risco;
-    private Instant ultimaAtualizacao;
-    private String localizacao;
-
-    // Construtores
-    public DadosMonitoramentoDTO() {}
-
-    public DadosMonitoramentoDTO(double nivelRio, double precipitacao, double temperatura,
-                                 String risco, Instant ultimaAtualizacao, String localizacao) {
-        this.nivelRio = nivelRio;
-        this.precipitacao = precipitacao;
-        this.temperatura = temperatura;
-        this.risco = risco;
-        this.ultimaAtualizacao = ultimaAtualizacao;
-        this.localizacao = localizacao;
-    }
+    private Long id;
+    private Double nivelAgua;
+    private Double vazao;
+    private Double pressao;
+    private LocalDateTime timestamp;
 
     // Getters e Setters
-    public double getNivelRio() { return nivelRio; }
-    public void setNivelRio(double nivelRio) { this.nivelRio = nivelRio; }
+    public Long getId() {
+        return id;
+    }
 
-    public double getPrecipitacao() { return precipitacao; }
-    public void setPrecipitacao(double precipitacao) { this.precipitacao = precipitacao; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public double getTemperatura() { return temperatura; }
-    public void setTemperatura(double temperatura) { this.temperatura = temperatura; }
+    public Double getNivelAgua() {
+        return nivelAgua;
+    }
 
-    public String getRisco() { return risco; }
-    public void setRisco(String risco) { this.risco = risco; }
+    public void setNivelAgua(Double nivelAgua) {
+        this.nivelAgua = nivelAgua;
+    }
 
-    public Instant getUltimaAtualizacao() { return ultimaAtualizacao; }
-    public void setUltimaAtualizacao(Instant ultimaAtualizacao) { this.ultimaAtualizacao = ultimaAtualizacao; }
+    public Double getVazao() {
+        return vazao;
+    }
 
-    public String getLocalizacao() { return localizacao; }
-    public void setLocalizacao(String localizacao) { this.localizacao = localizacao; }
+    public void setVazao(Double vazao) {
+        this.vazao = vazao;
+    }
+
+    public Double getPressao() {
+        return pressao;
+    }
+
+    public void setPressao(Double pressao) {
+        this.pressao = pressao;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 }
