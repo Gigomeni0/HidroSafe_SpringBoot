@@ -1,8 +1,5 @@
 package com.hidro_safe.restapi.service.impl;
 
-public class MonitoramentoServiceImpl // src/main/java/com/hidro_safe/restapi/service/impl/MonitoramentoServiceImpl.java
-package com.hidro_safe.restapi.service.impl;
-
 import com.hidro_safe.restapi.dto.DadosMonitoramentoDTO;
 import com.hidro_safe.restapi.service.MonitoramentoService;
 import org.springframework.stereotype.Service;
@@ -23,5 +20,4 @@ public class MonitoramentoServiceImpl implements MonitoramentoService {
                 "Região Central"  // localizacao
         );
     }
-}{
 }
